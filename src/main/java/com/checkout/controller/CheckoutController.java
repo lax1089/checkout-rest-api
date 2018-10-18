@@ -3,11 +3,14 @@ package com.checkout.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.checkout.domain.AddProductRequest;
+import com.checkout.domain.AddProductResponse;
 import com.checkout.domain.CheckoutResponse;
 import com.checkout.domain.ErrorResponse;
 import com.checkout.domain.ScanResponse;
@@ -53,6 +56,8 @@ public class CheckoutController {
     public ResponseEntity<?> calculateTotal(@RequestParam(value="cartItems") String cartItems) {
     	CheckoutResponse response = new CheckoutResponse();
         
+    	System.out.println("Request recieved at "+System.currentTimeMillis());
+    	
     	response.setCartItems(cartItems);
     	try {
     		response.setTotal(checkoutService.determineCartCost(cartItems));
@@ -62,6 +67,17 @@ public class CheckoutController {
 					"Invalid product code: " + upe.getMissingProductCode(), "/calculateTotal"));
     	}
     	
+    	return ResponseEntity.ok(response);
+    }
+    
+    @RequestMapping(value = "/addProduct",  method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<?> addProduct(@RequestBody AddProductRequest addProdRqst) {
+    	AddProductResponse response = new AddProductResponse();
+        
+    	System.out.println("Request recieved at "+System.currentTimeMillis());
+    	
+    	response.setMessage(checkoutService.addNewProduct(addProdRqst.getProductCode(), addProdRqst.getProductPrice()));
+    	    	
     	return ResponseEntity.ok(response);
     }
     

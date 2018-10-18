@@ -109,4 +109,10 @@ public class CheckoutService {
 		
 		return itemTotalCost;
 	}
+	
+	// Add a new product
+	public String addNewProduct(String productCode, BigDecimal basePrice) {
+		return productRepository.insertNewProduct(productCode, basePrice);
+	}
+	
 }

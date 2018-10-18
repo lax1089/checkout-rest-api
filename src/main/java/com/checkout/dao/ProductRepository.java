@@ -29,6 +29,17 @@ public class ProductRepository {
 	public TreeMap<Integer, BigDecimal> getSpecificProductPricing(String productCode) {
 		return productPricing.get(productCode);
 	}
+	
+	public String insertNewProduct(String productCode, BigDecimal basePrice) {
+		if (productPricing.containsKey(productCode)) return "Failed, product exists";
+		else {
+			TreeMap<Integer, BigDecimal> newProductPricing = new TreeMap<>();
+			newProductPricing.put(1, basePrice);
+			productPricing.put(productCode, newProductPricing);
+			printProductPricingRepo();
+			return "Product "+productCode+" successfully added";
+		}
+	}
 
 	private HashMap<String, TreeMap<Integer, BigDecimal>> populateMockData() {
 		TreeMap<Integer, BigDecimal> productPricingA = new TreeMap<>();
@@ -52,6 +63,16 @@ public class ProductRepository {
 		productPricing.put("D", productPricingD);
 
 		return productPricing;
+	}
+	
+	private void printProductPricingRepo() {
+		for (String product : productPricing.keySet()) {
+			System.out.println("Product Code: "+product);
+			TreeMap<Integer, BigDecimal> currPricing = productPricing.get(product);
+			for (Integer priceLine : currPricing.keySet()) {
+				System.out.println(priceLine+":"+currPricing.get(priceLine));
+			}
+		}
 	}
 
 }
