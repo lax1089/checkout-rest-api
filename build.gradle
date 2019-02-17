@@ -21,9 +21,9 @@ bootJar {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Model Builder',
-                   'Implementation-Version': 0.2,
-                   'Main-Class': 'com.ca.modelbuilder.application.ModelBuilderApplication'
+        attributes 'Implementation-Title': 'CheckoutAPI',
+                   'Implementation-Version': 1.2,
+                   'Main-Class': 'com.checkout.controller.Application'
     }
     from {
 	    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
