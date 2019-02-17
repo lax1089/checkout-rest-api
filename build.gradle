@@ -5,6 +5,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
     }
+    
 }
 
 apply plugin: 'java'
@@ -16,6 +17,17 @@ apply plugin: 'io.spring.dependency-management'
 bootJar {
     baseName = 'grocery-checkout'
     version =  '0.1.0'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Model Builder',
+                   'Implementation-Version': 0.2,
+                   'Main-Class': 'com.ca.modelbuilder.application.ModelBuilderApplication'
+    }
+    from {
+	    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
 }
 
 repositories {
@@ -30,6 +42,7 @@ dependencies {
 	compile('javax.ws.rs:javax.ws.rs-api:2.0.1')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile "io.springfox:springfox-swagger2:2.9.0"
+    compileOnly('org.projectlombok:lombok:1.18.4')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.jayway.jsonpath:json-path')
     testCompile('org.glassfish.jersey.core:jersey-common:2.22.2')

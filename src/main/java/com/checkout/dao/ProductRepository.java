@@ -37,7 +37,7 @@ public class ProductRepository {
 			newProductPricing.put(1, basePrice);
 			productPricing.put(productCode, newProductPricing);
 			printProductPricingRepo();
-			return "Product "+productCode+" successfully added";
+			return "Product "+productCode+" with base price "+basePrice+" successfully added";
 		}
 	}
 

@@ -40,6 +40,8 @@ public class CheckoutController {
     public ResponseEntity<?> scanProduct(@RequestParam(value="productCode") String productCode) {
         ScanResponse response = new ScanResponse();
         
+        System.out.println("Request recieved at "+System.currentTimeMillis()+" to scan product "+productCode);
+        
         response.setProductCode(productCode);
         try {
 	        response.setPricing(checkoutService.getProductPricing(productCode));
@@ -56,7 +58,7 @@ public class CheckoutController {
     public ResponseEntity<?> calculateTotal(@RequestParam(value="cartItems") String cartItems) {
     	CheckoutResponse response = new CheckoutResponse();
         
-    	System.out.println("Request recieved at "+System.currentTimeMillis());
+    	System.out.println("Request recieved at "+System.currentTimeMillis()+" to calculate cart total");
     	
     	response.setCartItems(cartItems);
     	try {
@@ -74,7 +76,7 @@ public class CheckoutController {
     public ResponseEntity<?> addProduct(@RequestBody AddProductRequest addProdRqst) {
     	AddProductResponse response = new AddProductResponse();
         
-    	System.out.println("Request recieved at "+System.currentTimeMillis());
+    	System.out.println("Request recieved at "+System.currentTimeMillis()+" to add product code "+addProdRqst.getProductCode()+" with base price "+addProdRqst.getProductPrice());
     	
     	response.setMessage(checkoutService.addNewProduct(addProdRqst.getProductCode(), addProdRqst.getProductPrice()));
     	    	
